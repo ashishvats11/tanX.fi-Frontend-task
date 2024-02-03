@@ -5,30 +5,30 @@ import RegisterForm from './Components/auth/RegisterForm';
 import Nav from './Components/common/Nav';
 import ProductList from './Components/product/ProductList';
 import ProductDetail from './Components/product/ProductDetail';
+import { UserProvider } from './context/userContext';
 
 const App = () => {
   return (
+    <UserProvider>
     <Router>
       <Nav />
-     
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm onLoginSuccess={{/* function to handle success */}} />} />
-        <Route path="/register" element={<RegisterForm onRegisterSuccess={{/* function to handle success */}} />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
-        {/* Add other routes as needed */}
+      
       </Routes>
     </Router>
+    </UserProvider>
   );
 };
 
-// Home component that includes Nav and ProductList
+
 const Home = () => {
   return (
     <>
-      
       <ProductList />
-      
     </>
   );
 };

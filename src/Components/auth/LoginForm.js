@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
+import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase'
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useUser } from '../../context/userContext'; 
 const LoginForm = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const Navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const { setUser } = useUser();
+  
   const handleLogin = async (event) => {
     event.preventDefault();
-    const auth = getAuth();
+    setUser({ email });
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      onLoginSuccess(userCredential.user);
-      // Redirect or navigate to home page after successful login
-      Navigate("/home");
+      await signInWithEmailAndPassword(auth, email, password);
+      // Assuming onRegisterSuccess is a function, you can still call it here if needed
+      if (onLoginSuccess) onLoginSuccess();
+      navigate('/'); // Redirect to the product page (assuming it's the homepage)
     } catch (error) {
-      setError('Failed to login: ' + error.message);
+      setError('Failed to register: ' + error.message);
     }
   };
 
