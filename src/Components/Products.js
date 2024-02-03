@@ -1,5 +1,5 @@
 import React from 'react'
-import item from '../utils.js/product';
+import item from '../utils.js/db.json';
 
 const Products = () => {
   const cat_items= item.map(items=>{
